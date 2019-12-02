@@ -14,6 +14,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity implements AudioManager.OnAudioFocusChangeListener {
 
     private ProgressDialog dialog;
@@ -97,6 +99,37 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
             return;
         }
     }
+    private void stopRadio() {
+        isPlaying = false;
+        if (dialog != null) dialog.dismiss();
+        if (player != null && player.isPlaying()) {
+            player.stop();
+            player.reset();
+        }
+        btnPlay.setImageResource(android.R.drawable.ic_media_play);
+    }
 
+    private void playMusic() {
+        new Thread((new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    player.setAudioStreamType(audioManager.STREAM_MUSIC);
+                    player.setDataSource(STREAM_URL);
+                    player.prepareAsync();
+                    player.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer) {
+                            mediaPlayer.start();
+                            isPlaying = true;
+                            if (dialog != null) dialog.dismiss();
+                        }
+                    });
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        })).start();
+    }
 
 }
