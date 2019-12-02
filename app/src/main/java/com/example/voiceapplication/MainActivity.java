@@ -177,4 +177,20 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
         }
     }
 
+    public void Execute(View view) {
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/ercanduman")));
+    }
+
+    // check if any phone call receives, if so, stop music
+    @Override
+    public void onAudioFocusChange(int focusChange) {
+        if (focusChange <= 0) {
+            //LOSS -> pause
+            stopRadio();
+        } else {
+            // GAIN -> play
+            startRadio();
+        }
+    }
+
 }
