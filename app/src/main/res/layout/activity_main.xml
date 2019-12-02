@@ -15,5 +15,24 @@
             android:layout_centerVertical="true">
 
         </ImageButton>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/mainp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"/>
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:gravity="center"
+            android:onClick="Execute"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
 </RelativeLayout>
 
