@@ -4,8 +4,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
@@ -130,6 +132,49 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
                 }
             }
         })).start();
+    }
+
+    //Listen for the volume button events
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == event.KEYCODE_VOLUME_DOWN) {
+            int currVolume = bar.getProgress();
+            bar.setProgress(currVolume - 1);
+            return true;
+        } else if (keyCode == event.KEYCODE_VOLUME_UP) {
+            int currVolume = bar.getProgress();
+            bar.setProgress(currVolume + 1);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopRadio();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (dialog != null && dialog.isShowing()) dialog.dismiss();
+    }
+
+    public void getMoreApps(View view) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://search?q=ercanduman")));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/search?q=ercanduman")));
+        }
+    }
+
+    public void getItOnGooglePlay(View view) {
+        try {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=ercanduman.radioom")));
+        } catch (android.content.ActivityNotFoundException anfe) {
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=ercanduman.radioom")));
+        }
     }
 
 }
