@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements AudioManager.OnAudioFocusChangeListener {
 
@@ -56,5 +57,46 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
 
         seekBarStuff();
     }
+    private void seekBarStuff() {
+        bar = (SeekBar) findViewById(R.id.seekBar);
+        bar.setMax(audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC));
+        bar.setProgress(audioManager.getStreamVolume(AudioManager.STREAM_MUSIC));
+        bar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
+                audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, i, 0);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+
+    //Pressing play button
+    public void startRadio() {
+        if (CheckNetwork.isNetwrokAvailable(context)) {
+            dialog.show();
+            if (!isPlaying) {
+                btnPlay.setImageResource(android.R.drawable.ic_media_pause);
+                playMusic();
+            } else {
+                stopRadio();
+            }
+        } else {
+            if (isPlaying) {
+                stopRadio();
+            }
+            Toast.makeText(context, context.getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
+            return;
+        }
+    }
+
 
 }
