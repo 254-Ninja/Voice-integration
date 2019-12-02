@@ -7,8 +7,11 @@ import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.text.Html;
+import android.view.View;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements AudioManager.OnAudioFocusChangeListener {
 
@@ -42,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
 
         player = new MediaPlayer();
         audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
-        btnPlay = (ImageButton) findViewById(R.id.btnPlayPause);
+        btnPlay = (ImageButton) findViewById(R.id.mainp);
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
