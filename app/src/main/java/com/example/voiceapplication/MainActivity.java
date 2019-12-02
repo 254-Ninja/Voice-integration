@@ -28,4 +28,30 @@ public class MainActivity extends AppCompatActivity implements AudioManager.OnAu
         context = MainActivity.this;
         init();
     }
+
+    private void init() {
+        STREAM_URL = context.getResources().getString(R.string.stream_url);
+
+        TextView desc = (TextView) findViewById(R.id.textView);
+        desc.setText(Html.fromHtml(getString(R.string.by_ercan_duman)));
+
+        dialog = new ProgressDialog(context);
+        dialog.setMessage(context.getString(R.string.loading));
+        dialog.setCancelable(true);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
+        player = new MediaPlayer();
+        audioManager = (AudioManager) context.getSystemService(context.AUDIO_SERVICE);
+        btnPlay = (ImageButton) findViewById(R.id.btnPlayPause);
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startRadio();
+            }
+        });
+        btnPlay.setImageResource(android.R.drawable.ic_media_play);
+
+        seekBarStuff();
+    }
+
 }
